@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiritoasty.online</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+
+    body {
+      background-color: #121212;
+      color: #f5f5f5;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #a8bca1;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem 0;
+    }
+
+    .enter-overlay {
+      position: fixed;
+      inset: 0;
+      background: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: opacity 0.6s ease;
+    }
+
+    .enter-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .enter-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .enter-content h1 {
+      font-weight: 300;
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    .enter-btn {
+      background: #a8bca1;
+      color: #121212;
+      padding: 0.9rem 2.4rem;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.25s, background 0.25s;
+    }
+
+    .enter-btn:hover {
+      transform: translateY(-2px);
+      background: #7d8c74;
+    }
+
+    .animate {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition:
+        opacity 0.6s cubic-bezier(0.6,0,0.2,1),
+        transform 0.6s cubic-bezier(0.6,0,0.2,1);
+    }
+
+    body.entered .animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+     header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #333;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: #a8bca1;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+    }
+
+    .hero {
+      margin-top: 2rem;
+      padding: 4rem 0;
+      background: linear-gradient(
+        160deg,
+        rgba(168,188,161,0.15),
+        rgba(18,18,18,1) 70%
+      );
+      border-radius: 14px;
+      text-align: left;
+    }
+
+ .hero-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 3rem;
+  align-items: center;
+  padding-left: 2rem;
+}
+
+    .album img {
+      width: 100%;
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+
+    .hero-text span {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      color: #bbb;
+    }
+
+    .hero-text h2 {
+      font-size: 2.6rem;
+      margin: 0.6rem 0;
+    }
+
+    .hero-text p {
+      color: #a8bca1;
+      margin-bottom: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .controls button {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      background: #a8bca1;
+      color: #121212;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: transform 0.25s;
+    }
+
+    .controls button:hover {
+      transform: scale(1.08);
+    }
+
+    .time {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      appearance: none;
+      height: 6px;
+      background: #333;
+      border-radius: 999px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      background: #a8bca1;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* ===== INTERESTS ===== */
+    .section-title {
+      color: #a8bca1;
+      margin-bottom: 1rem;
+    }
+
+    .interests {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #1a1a1a;
+      padding: 1.5rem;
+      border-radius: 12px;
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      color: #a8bca1;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      border-top: 1px solid #333;
+      margin-top: 3rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    /* ===== TOAST ===== */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #a8bca1;
+      color: #121212;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition:
+        opacity 0.4s cubic-bezier(0.6,0,0.2,1),
+        transform 0.6s cubic-bezier(0.6,0,0.2,1);
+      z-index: 1000;
+    }
+
+    @media (max-width: 800px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .controls {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="enter-overlay" id="enterOverlay">
+    <div class="enter-content">
+      <h1>Kiritoasty.online</h1>
+      <div class="enter-btn" id="enterBtn">Click to enter</div>
+    </div>
+  </div>
+
+  <header class="container animate">
+    <h1>Kiritoasty.online</h1>
+    <nav>
+      <a href="#contact" id="contactLink">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero container animate">
+    <div class="hero-grid">
+      <div class="album">
+        <img src="https://files.catbox.moe/h5z0dy.png" alt="Album Art">
+      </div>
+
+      <div class="hero-text">
+        <span>NOW PLAYING</span>
+        <h2>Skibtoe</h2>
+        <p>Kiritoasty</p>
+
+        <audio id="audio" src="https://files.catbox.moe/zf14k6.mp3"></audio>
+
+        <div class="controls">
+          <button id="playBtn">▶</button>
+          <div class="time" id="time">0:00</div>
+        </div>
+
+        <input type="range" id="progress" value="0" min="0" max="100">
+      </div>
+    </div>
+  </section>
+
+  <section class="container animate">
+    <h2 class="section-title">My Interests</h2>
+    <div class="interests">
+      <div class="card">
+        <h3>Web development</h3>
+        <p>Why else would this exist</p>
+      </div>
+      <div class="card">
+        <h3>Animation</h3>
+        <p>I make penguinmod animations (I'm a penguinmod supremacist)</p>
+      </div>
+      <div class="card">
+        <h3>Tech exploration</h3>
+        <p>Sudo rm -rf /* ON MY LINUX DESKTOP!!!</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="animate">
+    why are you reading this
+  </footer>
+
+  <div id="toast">My discord username is now on your clipboard!</div>
+
+  <script>
+    const enterBtn = document.getElementById('enterBtn');
+    const overlay = document.getElementById('enterOverlay');
+
+    enterBtn.addEventListener('click', () => {
+      document.body.classList.add('entered');
+      overlay.classList.add('hidden');
+    });
+
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('playBtn');
+    const progress = document.getElementById('progress');
+    const time = document.getElementById('time');
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = '⏸';
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶';
+      }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const percent = (audio.currentTime / audio.duration) * 100 || 0;
+      progress.value = percent;
+
+      const m = Math.floor(audio.currentTime / 60);
+      const s = Math.floor(audio.currentTime % 60).toString().padStart(2,'0');
+      time.textContent = `${m}:${s}`;
+    });
+
+    progress.addEventListener('input', () => {
+      audio.currentTime = (progress.value / 100) * audio.duration;
+    });
+
+    const contactLink = document.getElementById('contactLink');
+    const toast = document.getElementById('toast');
+
+    contactLink.addEventListener('click', e => {
+      e.preventDefault();
+
+      navigator.clipboard.writeText('notkiritoasty');
+
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+      }, 3000);
+    });
+  </script>
+
+</body>
+</html>
+
